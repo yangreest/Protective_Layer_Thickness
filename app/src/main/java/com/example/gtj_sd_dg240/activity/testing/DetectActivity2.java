@@ -526,26 +526,26 @@ public class DetectActivity2 extends BaseActivity<ActDetect2Binding> {
         double leftThickness, rightThickness;
         // 以下为左/右主筋分别测厚的预留分支，当前未启用（仅用中间主筋结果）
         if (left < right) {
-//            leftThickness = computeThickness(strRebarDiameter, rebarSpacingMin, rebarSpacingMin, checkDataList.get(0), false);
-//            rightThickness = computeThickness(strRebarDiameter, rebarSpacingMax, rebarSpacingMax, checkDataList.get(2), false);
+        //            leftThickness = computeThickness(strRebarDiameter, rebarSpacingMin, rebarSpacingMin, checkDataList.get(0), false);
+        //            rightThickness = computeThickness(strRebarDiameter, rebarSpacingMax, rebarSpacingMax, checkDataList.get(2), false);
         } else {
-//            rightThickness = computeThickness(strRebarDiameter, rebarSpacingMin, rebarSpacingMin, checkDataList.get(0), false);
-//            leftThickness = computeThickness(strRebarDiameter, rebarSpacingMax, rebarSpacingMax, checkDataList.get(2), false);
+        //            rightThickness = computeThickness(strRebarDiameter, rebarSpacingMin, rebarSpacingMin, checkDataList.get(0), false);
+        //            leftThickness = computeThickness(strRebarDiameter, rebarSpacingMax, rebarSpacingMax, checkDataList.get(2), false);
         }
         // 以推算出的主筋间距为条件，用实测信号查表得到厚度
         double middleThickness = computeThickness(strRebarDiameter, distance, rebarSpacingMin, rebarSpacingMax, signal, false);
-//        dataProcessorHandler.post(() -> {
-//            StringBuilder sbd = new StringBuilder();
-//            sbd.append("钢筋直径：").append(rebarDiameter);
-//            sbd.append("，　电杆直径：").append(StringUtils.getRounding(poleRadius * 2, 0));
-//            sbd.append("，\n主筋间距 Min：").append(StringUtils.getRounding(rebarSpacingMin, 0));
-//            sbd.append("，　Max：").append(StringUtils.getRounding(rebarSpacingMax, 0));
-//            sbd.append("，　电杆直径补偿：").append(poleCompensation);
-//            sbd.append("\nleftThickness: ").append(leftThickness);
-//            sbd.append("\nmiddleThickness: ").append(middleThickness);
-//            sbd.append("\nrightThickness: ").append(rightThickness);
-//            StyleAlertDialog2 styleAlertDialog = new StyleAlertDialog2(this);
-//            styleAlertDialog.setContent(sbd).setOKButton("确定", v -> styleAlertDialog.dismiss()).show();
+        //        dataProcessorHandler.post(() -> {
+        //            StringBuilder sbd = new StringBuilder();
+        //            sbd.append("钢筋直径：").append(rebarDiameter);
+        //            sbd.append("，　电杆直径：").append(StringUtils.getRounding(poleRadius * 2, 0));
+        //            sbd.append("，\n主筋间距 Min：").append(StringUtils.getRounding(rebarSpacingMin, 0));
+        //            sbd.append("，　Max：").append(StringUtils.getRounding(rebarSpacingMax, 0));
+        //            sbd.append("，　电杆直径补偿：").append(poleCompensation);
+        //            sbd.append("\nleftThickness: ").append(leftThickness);
+        //            sbd.append("\nmiddleThickness: ").append(middleThickness);
+        //            sbd.append("\nrightThickness: ").append(rightThickness);
+        //            StyleAlertDialog2 styleAlertDialog = new StyleAlertDialog2(this);
+        //            styleAlertDialog.setContent(sbd).setOKButton("确定", v -> styleAlertDialog.dismiss()).show();
         return middleThickness;
     }
 
@@ -647,9 +647,9 @@ public class DetectActivity2 extends BaseActivity<ActDetect2Binding> {
         if (rebarMinMaxBeanList.size() >= 2) {  //2：命中两个间距档位，取两者厚度的均值
             //主筋间距内插
             ths = StringUtils.getRounding((rebarMinMaxBeanList.get(0).thickness + rebarMinMaxBeanList.get(1).thickness) / 2d, 2);
-//            double rebarSpacing0 = Double.parseDouble(rebarMinMaxBeanList.get(0).rebarSpacingMin);
-//            double rebarSpacing1 = Double.parseDouble(rebarMinMaxBeanList.get(1).rebarSpacingMin);
-//            ths = StringUtils.getRounding(StringUtils.getInterpolationValue(rebarSpacing0, , rebarSpacing1, rebarMinMaxBeanList.get(1).thickness, spacingMin), 2);
+            //            double rebarSpacing0 = Double.parseDouble(rebarMinMaxBeanList.get(0).rebarSpacingMin);
+            //            double rebarSpacing1 = Double.parseDouble(rebarMinMaxBeanList.get(1).rebarSpacingMin);
+            //            ths = StringUtils.getRounding(StringUtils.getInterpolationValue(rebarSpacing0, , rebarSpacing1, rebarMinMaxBeanList.get(1).thickness, spacingMin), 2);
             sbdMessage.append("主筋间距NX：\n").append(rebarMinMaxBeanList.get(0).uniqueKey).append("　～　").append(rebarMinMaxBeanList.get(1).uniqueKey).append("　厚度：").append(ths);
         } else if (rebarMinMaxBeanList.size() == 1) {  //1：仅命中一个档位，直接用其厚度
             ths = rebarMinMaxBeanList.get(0).thickness;
