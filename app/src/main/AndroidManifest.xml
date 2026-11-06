@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.gtj_sd_dg240">
+
+    <!-- 相机功能 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <!-- ============================================ -->
+    <!-- 蓝牙相关权限 -->
+    <!-- ============================================ -->
+    <!-- Android 11 及以下的蓝牙权限 -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <!-- Android 12+ 的新蓝牙权限 -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="31" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- 位置权限（蓝牙扫描需要，Android 12 以下必须） -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- ============================================ -->
+    <!-- 存储权限 -->
+    <!-- ============================================ -->
+    <!-- Android 10 及以下的存储权限 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <!-- Android 11+ 所有文件访问权限 -->
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <!-- ============================================ -->
+    <!-- 相机权限 -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- ============================================ -->
+    <!-- 网络权限 -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <!-- ============================================ -->
+    <!-- 硬件与系统权限 -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:ignore="RequestInstallPackagesPolicy" />
+
+    <!-- ============================================ -->
+    <!-- 特殊权限 -->
+    <!-- ============================================ -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:name=".GTJApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_logo1"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/icon_logo1"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute,DiscouragedApi"
+        tools:replace="android:icon,android:theme">
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/startWindowTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!--HOME桌面特性-->
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.start.StartActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.DetectActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.DetectActivity2"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.DetectConfigActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.NewProjectActivity"
+            android:theme="@style/MyDialog"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activity.testing.EntrustListActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.ConfigManagerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.ConfigListActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.testing.ResultActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.data.DataFileManagerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.data.DataExportActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.data.DataUploadActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.about.AboutUsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.setting.ScanningBlueboothActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.setting.CalibrationDeviceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.setting.MeteringDeviceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.start.CrashMessageActivity"
+            android:screenOrientation="landscape" />
+        <!--百度地图配置-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":remote" />
+        <!-- 移除第三方库中有问题的服务 -->
+        <service
+            android:name="com.litesuits.common.service.NotificationService"
+            android:exported="false"
+            tools:node="replace" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="dL00m5ivOyfajPylz0zV8HolC7oJzDW3" />
+        <!--FileProvider-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>

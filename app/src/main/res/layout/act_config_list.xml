@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF2F8F8"
+    android:orientation="vertical">
+
+    <com.example.gtj_sd_dg240.view.NavigationBar
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color006F5F" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/color006F5F"
+                android:gravity="center"
+                android:text="电杆类型"
+                android:textColor="@color/colorFFF"
+                android:textSize="14dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_type"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="1px"
+                android:layout_marginTop="1px"
+                android:layout_marginRight="1px"
+                android:layout_weight="1"
+                android:overScrollMode="never" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/bg_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/color006F5F"
+                android:gravity="center"
+                android:text="参数配置列表"
+                android:textColor="@color/colorFFF"
+                android:textSize="14dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_config"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="1px"
+                android:layout_marginTop="1px"
+                android:layout_marginRight="1px"
+                android:layout_weight="1"
+                android:overScrollMode="never" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/color006F5F"
+                android:gravity="center"
+                android:text="参数配置信息"
+                android:textColor="@color/colorFFF"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:lineSpacingExtra="8dp"
+                android:textColor="@color/color000"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="4dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="选　　择"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btn_return"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="返　　回"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>

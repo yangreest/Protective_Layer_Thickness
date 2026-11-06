@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFFF"
+    android:orientation="vertical">
+
+    <com.example.gtj_sd_dg240.view.NavigationBar
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color006F5F" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white_circle"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_tab_detection"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="单点检测"
+                    android:textColor="@color/color8E8E8E"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_tab_forecast"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="预估直径"
+                    android:textColor="@color/color8E8E8E"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="1px"
+                android:layout_marginRight="1px"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view_tab_detection"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorFFF" />
+
+                <View
+                    android:id="@+id/view_tab_forecast"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorFFF" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="1px"
+                android:layout_marginRight="1px"
+                android:background="@color/color333" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/layout_detection"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="箍筋间距："
+                            android:textColor="@color/color000"
+                            android:textSize="14dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.example.gtj_sd_dg240.view.SpinnerStaticView
+                                android:id="@+id/sp_interval"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_edittext"
+                                android:textColor="@color/color000"
+                                android:textSize="14dp" />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="1px"
+                                android:background="@drawable/bg_pull_down_green"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/icon_bottom" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="center_vertical"
+                            android:text="距离根部："
+                            android:textColor="@color/color000"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/et_distance"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edittext"
+                            android:cursorVisible="false"
+                            android:gravity="center_vertical"
+                            android:hint="请填写"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/color000"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/bg_edittext_gray"
+                            android:gravity="center"
+                            android:text="m"
+                            android:textColor="@color/color000"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:visibility="invisible" />
+
+                        <Button
+                            android:id="@+id/btn_check"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="72dp"
+                            android:background="@drawable/bg_button_btn_green"
+                            android:text="确　　定"
+                            android:textColor="@color/colorFFF"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_check_single"
+                            android:layout_width="45dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/bg_button_btn_green"
+                            android:text="检测"
+                            android:textColor="@color/colorFFF"
+                            android:textSize="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_circle"
+                            android:padding="2dp">
+
+                            <TextView
+                                android:id="@+id/tv_check11"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check12"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check13"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="-1px"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_circle"
+                            android:padding="2dp">
+
+                            <TextView
+                                android:id="@+id/tv_check21"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check22"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check23"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="-1px"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_circle"
+                            android:padding="2dp">
+
+                            <TextView
+                                android:id="@+id/tv_check31"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check32"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/tv_check33"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/color006F5F"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textColor="@color/colorFFF"
+                                android:textSize="11dp"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_delete"
+                            android:layout_width="45dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/bg_button_btn_green"
+                            android:text="删除"
+                            android:textColor="@color/colorFFF"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_thickness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tv_single"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/color000"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_single1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/tv_single"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/colorRed"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="center_vertical"
+                            android:text="距离根部："
+                            android:textColor="@color/color000"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/et_distance1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edittext"
+                            android:cursorVisible="false"
+                            android:gravity="center_vertical"
+                            android:hint="请填写"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/color000"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/bg_edittext_gray"
+                            android:gravity="center"
+                            android:text="m"
+                            android:textColor="@color/color000"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lll"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/ll"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:visibility="invisible" />
+
+                        <Button
+                            android:id="@+id/btn_forecast"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="72dp"
+                            android:background="@drawable/bg_button_btn_green"
+                            android:text="预　　估"
+                            android:textColor="@color/colorFFF"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/lll">
+
+                        <TextView
+                            android:id="@+id/tv_forecast_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/color006F5F"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_forecast_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/color006F5F"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_forecast_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_forecast_min"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/color006F5F"
+                            android:textSize="20dp" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                            <TextView
+                                android:id="@+id/tv_forecast"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/color006F5F"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:id="@+id/tv_forecast_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_forecast"
+                                android:textColor="@color/color006F5F"
+                                android:textSize="16dp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/layout_grid_top"
+                        layout="@layout/view_grid_top" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/layout_grid_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="参数设置"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="存　　储"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btn_file"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="文　　件"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btn_finish"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_btn_green"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="返　　回"
+            android:textColor="@color/colorFFF"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>

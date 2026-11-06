@@ -1,0 +1,44 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: master
+nodes_managed: true
+exported_at: "2026-09-23T02:32:01Z"
+modules:
+    "":
+        dir_name: GTJ-SD-DG240 Android 多模块工程根
+        title: GTJ-SD-DG240 Android 多模块工程根
+        scope:
+            - build.gradle
+            - settings.gradle
+            - gradle.properties
+            - .gitignore
+            - android.keystore.txt
+            - android.keystore
+            - gradlew
+        source_files: []
+        children:
+            - app
+            - utillibrary
+        depends_on: []
+        related_to: []
+    app:
+        dir_name: GTJ-SD-DG240 混凝土电杆检测设备 Android 应用
+        title: GTJ-SD-DG240 混凝土电杆检测设备 Android 应用
+        scope:
+            - app/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: utillibrary
+    utillibrary:
+        dir_name: Android 通用工具库（MVP基类、日志、文件、USB、图片代理等）
+        title: Android 通用工具库（MVP基类、日志、文件、USB、图片代理等）
+        scope:
+            - utillibrary/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: app

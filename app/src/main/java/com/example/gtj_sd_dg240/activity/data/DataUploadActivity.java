@@ -1,0 +1,485 @@
+package com.example.gtj_sd_dg240.activity.data;
+
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.SizeUtils;
+import com.example.gtj_sd_dg240.R;
+import com.example.gtj_sd_dg240.StaticConstant;
+import com.example.gtj_sd_dg240.activity.start.BaseActivity;
+import com.example.gtj_sd_dg240.databinding.ActDataExportBinding;
+import com.example.gtj_sd_dg240.functions.database.greenDao.db.ZoneBeanDao;
+import com.example.gtj_sd_dg240.model.RebarBean;
+import com.example.gtj_sd_dg240.model.RebarPageBean;
+import com.example.gtj_sd_dg240.model.ZoneBean;
+import com.example.gtj_sd_dg240.net.MessageResult;
+import com.example.gtj_sd_dg240.net.RetrofitPresenter;
+import com.example.gtj_sd_dg240.net.RetrofitPresenterResultListener;
+import com.example.gtj_sd_dg240.storage.GreenDaoHelper;
+import com.example.gtj_sd_dg240.utils.BitmapUtils;
+import com.example.gtj_sd_dg240.utils.StringUtils;
+import com.example.gtj_sd_dg240.view.StyleAlertDialog;
+import com.example.gtj_sd_dg240.view.StyleAlertDialog1;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+@SuppressLint({"SetTextI18n", "InflateParams"})
+public class DataUploadActivity extends BaseActivity<ActDataExportBinding> {
+    private final Map<String, RebarPageBean> averageMap = new HashMap<>();
+    private Set<Long> treatZoneIdSet = new HashSet<>();
+    private final List<String> exportPathList = new ArrayList<>();
+    private final List<ZoneBean> exportZoneList = new ArrayList<>();
+    private int exportCount;
+
+    @Override
+    protected ActDataExportBinding getBinding() {
+        return ActDataExportBinding.inflate(getLayoutInflater());
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initView();
+        String strZoneIdSet = getIntent().getStringExtra("treatZoneIdSet");
+        treatZoneIdSet = new Gson().fromJson(strZoneIdSet, new TypeToken<Set<Long>>() {
+        }.getType());
+        queryExportData();
+    }
+
+    private void initView() {
+        binding.navigationBar.setTitleText("数据上传");
+        initBatteryReceiver(binding.navigationBar);
+        initBluetoothStatus(binding.navigationBar);
+
+        binding.layoutLogo.setVisibility(StaticConstant.isNeutral ? View.GONE : View.VISIBLE);
+        switch (StaticConstant.APP_DEFAULT) {
+            case StaticConstant.APP_LIERDA:
+                binding.ivLogoLrd.setVisibility(View.VISIBLE);
+                binding.ivLogoZhi.setVisibility(View.GONE);
+                binding.vCenter.setVisibility(View.GONE);
+                binding.ivLogoGjdw.setVisibility(View.GONE);
+                binding.ivLogoMshz.setVisibility(View.GONE);
+                binding.ivLogoGtj.setVisibility(View.GONE);
+                break;
+            case StaticConstant.APP_DIANKEYUAN:
+                binding.ivLogoLrd.setVisibility(View.GONE);
+                binding.ivLogoZhi.setVisibility(View.VISIBLE);
+                binding.vCenter.setVisibility(View.VISIBLE);
+                binding.ivLogoGjdw.setVisibility(View.VISIBLE);
+                binding.ivLogoMshz.setVisibility(View.GONE);
+                binding.ivLogoGtj.setVisibility(View.GONE);
+                break;
+            case StaticConstant.APP_MINGSHENGHENGZHUO:
+                binding.ivLogoLrd.setVisibility(View.VISIBLE);
+                binding.ivLogoZhi.setVisibility(View.GONE);
+                binding.vCenter.setVisibility(View.VISIBLE);
+                binding.ivLogoGjdw.setVisibility(View.GONE);
+                binding.ivLogoMshz.setVisibility(View.VISIBLE);
+                binding.ivLogoGtj.setVisibility(View.GONE);
+                break;
+            case StaticConstant.APP_GTJ:
+                binding.ivLogoLrd.setVisibility(View.GONE);
+                binding.ivLogoZhi.setVisibility(View.GONE);
+                binding.vCenter.setVisibility(View.GONE);
+                binding.ivLogoGjdw.setVisibility(View.GONE);
+                binding.ivLogoMshz.setVisibility(View.GONE);
+                binding.ivLogoGtj.setVisibility(View.VISIBLE);
+                break;
+
+        }
+    }
+
+    private void refreshDataView(ZoneBean zoneBean) {
+        binding.tvProject.setText(zoneBean.projectName);
+        binding.tvZone.setText(zoneBean.poleNo);
+        binding.tvDiameterTop.setText("d: " + zoneBean.poleTopDiameter + "mm");
+        binding.tvDiameterBottom.setText("D: " + zoneBean.poleBottomDiameter + "mm");
+        binding.tvPoleHeight.setText("L: " + zoneBean.poleHeight + "m");
+        configGridTop(zoneBean.poleBottomCount);
+        refreshGrid(zoneBean);
+        showPoleLocation(zoneBean);
+    }
+
+    private void showPoleLocation(ZoneBean zoneBean) {
+        binding.vMark.post(() -> {
+            //x
+            int[] location = new int[2];
+            binding.vMark.getLocationInWindow(location);
+            int width = binding.vMark.getWidth();
+            int originalPoint = location[0] - SizeUtils.dp2px(14);
+            //y
+            int heightTop = binding.vTop.getHeight();
+            int heightBottom1 = binding.vBottom1.getHeight();
+            //
+            int heightTop1 = binding.vTop1.getHeight();
+            int heightBottom = binding.vBottom.getHeight();
+            if (!averageMap.isEmpty()) {
+                List<RebarPageBean> pageBeanList = new ArrayList<>();
+                for (String key : averageMap.keySet()) {
+                    pageBeanList.add(averageMap.get(key));
+                }
+                Collections.sort(pageBeanList);
+                if (!pageBeanList.isEmpty()) {
+                    treatLocation(binding.vMiddle1, binding.tvMiddle1, pageBeanList.get(0), zoneBean, originalPoint, width, heightTop, heightBottom1);
+                }
+                if (pageBeanList.size() > 1) {
+                    treatLocation(binding.vMiddle2, binding.tvMiddle2, pageBeanList.get(1), zoneBean, originalPoint, width, heightTop1, heightBottom);
+                }
+                if (pageBeanList.size() > 2) {
+                    treatLocation(binding.vMiddle3, binding.tvMiddle3, pageBeanList.get(2), zoneBean, originalPoint, width, heightTop, heightBottom1);
+                }
+                if (pageBeanList.size() > 3) {
+                    treatLocation(binding.vMiddle4, binding.tvMiddle4, pageBeanList.get(3), zoneBean, originalPoint, width, heightTop1, heightBottom);
+                }
+                if (pageBeanList.size() > 4) {
+                    treatLocation(binding.vMiddle5, binding.tvMiddle5, pageBeanList.get(4), zoneBean, originalPoint, width, heightTop, heightBottom1);
+                }
+                if (pageBeanList.size() > 5) {
+                    treatLocation(binding.vMiddle6, binding.tvMiddle6, pageBeanList.get(5), zoneBean, originalPoint, width, heightTop1, heightBottom);
+                }
+                if (pageBeanList.size() > 6) {
+                    treatLocation(binding.vMiddle7, binding.tvMiddle7, pageBeanList.get(6), zoneBean, originalPoint, width, heightTop, heightBottom1);
+                }
+                if (pageBeanList.size() > 7) {
+                    treatLocation(binding.vMiddle8, binding.tvMiddle8, pageBeanList.get(7), zoneBean, originalPoint, width, heightTop1, heightBottom);
+                }
+                if (pageBeanList.size() > 8) {
+                    treatLocation(binding.vMiddle9, binding.tvMiddle9, pageBeanList.get(8), zoneBean, originalPoint, width, heightTop, heightBottom1);
+                }
+                if (pageBeanList.size() > 9) {
+                    treatLocation(binding.vMiddle10, binding.tvMiddle10, pageBeanList.get(9), zoneBean, originalPoint, width, heightTop1, heightBottom);
+                }
+            }
+        });
+    }
+
+    private void treatLocation(View view, TextView textView, RebarPageBean pageBean, ZoneBean zoneBean, int originalPoint, int width, int heightTop, int heightBottom) {
+        int location_x = (int) StringUtils.getInterpolationValue(0, originalPoint, Double.parseDouble(zoneBean.poleHeight), originalPoint + width, pageBean.distance);
+        int height = (int) StringUtils.getInterpolationValue(0, heightBottom, Double.parseDouble(zoneBean.poleHeight), heightTop, pageBean.distance);
+        RelativeLayout.LayoutParams middleLayoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        middleLayoutParams.leftMargin = location_x;
+        middleLayoutParams.height = height;
+        view.setLayoutParams(middleLayoutParams);
+        textView.setText("H: " + pageBean.averageThickness);
+        view.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
+    }
+
+    private void configGridTop(int rebarCount) {
+        binding.layoutGridTop.tvGrid1.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid1.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid2.setVisibility(rebarCount >= 2 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid2.setVisibility(rebarCount >= 2 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid3.setVisibility(rebarCount >= 3 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid3.setVisibility(rebarCount >= 3 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid4.setVisibility(rebarCount >= 4 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid4.setVisibility(rebarCount >= 4 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid5.setVisibility(rebarCount >= 5 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid5.setVisibility(rebarCount >= 5 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid6.setVisibility(rebarCount >= 6 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid6.setVisibility(rebarCount >= 6 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid7.setVisibility(rebarCount >= 7 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid7.setVisibility(rebarCount >= 7 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid8.setVisibility(rebarCount >= 8 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid8.setVisibility(rebarCount >= 8 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid9.setVisibility(rebarCount >= 9 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid9.setVisibility(rebarCount >= 9 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGrid10.setVisibility(rebarCount >= 10 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.vGrid10.setVisibility(rebarCount >= 10 ? View.VISIBLE : View.GONE);
+        binding.layoutGridTop.tvGridAverage.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 刷新钢筋列表
+     */
+    private void refreshGrid(ZoneBean zoneBean) {
+        averageMap.clear();
+        binding.layoutGridContent.removeAllViews();
+        int rebarPageListSize = zoneBean.rebarPageList.size();
+        if (rebarPageListSize > 0) {
+            int lastBeanListSize = zoneBean.rebarPageList.get(zoneBean.rebarPageList.size() - 1).beanList.size();
+            if (lastBeanListSize == 0) {
+                rebarPageListSize -= 1;
+            }
+            for (int i = 0; i < rebarPageListSize; i++) {
+                View itemView = LayoutInflater.from(this).inflate(R.layout.view_grid_result_content, null, false);
+                configGrid(itemView, zoneBean.poleBottomCount, zoneBean.rebarPageList.get(i));
+                itemView.setId(i);
+                binding.layoutGridContent.addView(itemView);
+            }
+        }
+    }
+
+    private void configGrid(View itemView, int rebarCount, RebarPageBean bean) {
+        TextView tvNumber = itemView.findViewById(R.id.tv_grid_number);
+        TextView tv1 = itemView.findViewById(R.id.tv_grid_1);
+        View v1 = itemView.findViewById(R.id.v_grid_1);
+        tv1.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+        v1.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+        TextView tv2 = itemView.findViewById(R.id.tv_grid_2);
+        View v2 = itemView.findViewById(R.id.v_grid_2);
+        tv2.setVisibility(rebarCount >= 2 ? View.VISIBLE : View.GONE);
+        v2.setVisibility(rebarCount >= 2 ? View.VISIBLE : View.GONE);
+        TextView tv3 = itemView.findViewById(R.id.tv_grid_3);
+        View v3 = itemView.findViewById(R.id.v_grid_3);
+        tv3.setVisibility(rebarCount >= 3 ? View.VISIBLE : View.GONE);
+        v3.setVisibility(rebarCount >= 3 ? View.VISIBLE : View.GONE);
+        TextView tv4 = itemView.findViewById(R.id.tv_grid_4);
+        View v4 = itemView.findViewById(R.id.v_grid_4);
+        tv4.setVisibility(rebarCount >= 4 ? View.VISIBLE : View.GONE);
+        v4.setVisibility(rebarCount >= 4 ? View.VISIBLE : View.GONE);
+        TextView tv5 = itemView.findViewById(R.id.tv_grid_5);
+        View v5 = itemView.findViewById(R.id.v_grid_5);
+        tv5.setVisibility(rebarCount >= 5 ? View.VISIBLE : View.GONE);
+        v5.setVisibility(rebarCount >= 5 ? View.VISIBLE : View.GONE);
+        TextView tv6 = itemView.findViewById(R.id.tv_grid_6);
+        View v6 = itemView.findViewById(R.id.v_grid_6);
+        tv6.setVisibility(rebarCount >= 6 ? View.VISIBLE : View.GONE);
+        v6.setVisibility(rebarCount >= 6 ? View.VISIBLE : View.GONE);
+        TextView tv7 = itemView.findViewById(R.id.tv_grid_7);
+        View v7 = itemView.findViewById(R.id.v_grid_7);
+        tv7.setVisibility(rebarCount >= 7 ? View.VISIBLE : View.GONE);
+        v7.setVisibility(rebarCount >= 7 ? View.VISIBLE : View.GONE);
+        TextView tv8 = itemView.findViewById(R.id.tv_grid_8);
+        View v8 = itemView.findViewById(R.id.v_grid_8);
+        tv8.setVisibility(rebarCount >= 8 ? View.VISIBLE : View.GONE);
+        v8.setVisibility(rebarCount >= 8 ? View.VISIBLE : View.GONE);
+        TextView tv9 = itemView.findViewById(R.id.tv_grid_9);
+        View v9 = itemView.findViewById(R.id.v_grid_9);
+        tv9.setVisibility(rebarCount >= 9 ? View.VISIBLE : View.GONE);
+        v9.setVisibility(rebarCount >= 9 ? View.VISIBLE : View.GONE);
+        TextView tv10 = itemView.findViewById(R.id.tv_grid_10);
+        View v10 = itemView.findViewById(R.id.v_grid_10);
+        tv10.setVisibility(rebarCount >= 10 ? View.VISIBLE : View.GONE);
+        v10.setVisibility(rebarCount >= 10 ? View.VISIBLE : View.GONE);
+        TextView tvAver = itemView.findViewById(R.id.tv_grid_average);
+        tvAver.setVisibility(rebarCount >= 1 ? View.VISIBLE : View.GONE);
+        //
+        tvNumber.setText(bean.segment);
+        if (bean.beanList == null) {
+            return;
+        }
+        if (!bean.beanList.isEmpty()) {
+            setTextView(tv1, bean.beanList.get(0));
+        }
+        if (bean.beanList.size() > 1) {
+            setTextView(tv2, bean.beanList.get(1));
+        }
+        if (bean.beanList.size() > 2) {
+            setTextView(tv3, bean.beanList.get(2));
+        }
+        if (bean.beanList.size() > 3) {
+            setTextView(tv4, bean.beanList.get(3));
+        }
+        if (bean.beanList.size() > 4) {
+            setTextView(tv5, bean.beanList.get(4));
+        }
+        if (bean.beanList.size() > 5) {
+            setTextView(tv6, bean.beanList.get(5));
+        }
+        if (bean.beanList.size() > 6) {
+            setTextView(tv7, bean.beanList.get(6));
+        }
+        if (bean.beanList.size() > 7) {
+            setTextView(tv8, bean.beanList.get(7));
+        }
+        if (bean.beanList.size() > 8) {
+            setTextView(tv9, bean.beanList.get(8));
+        }
+        if (bean.beanList.size() > 9) {
+            setTextView(tv10, bean.beanList.get(9));
+        }
+        double total0 = 0, total1 = 0, average0, average1;
+        double size = 0;
+        if (!bean.beanList.isEmpty()) {
+            for (RebarBean b : bean.beanList) {
+                if (b.thickness > 0) {
+                    total0 += b.thickness;
+                    total1 += b.thickness1;
+                    size++;
+                }
+            }
+            average0 = StringUtils.getRounding(total0 / size, 2);
+            average1 = StringUtils.getRounding(total1 / size, 2);
+            average0 = StringUtils.getRounding(average0, 1);
+            average1 = StringUtils.getRounding(average1, 1);
+        } else {
+            average0 = 0;
+            average1 = 0;
+        }
+        tvAver.setText(average1 + "\n" + average0);
+        if (TextUtils.equals("梢部", bean.segment)) {
+            binding.tvTop.setText("H: " + average0);
+            binding.tvTop.setVisibility(View.VISIBLE);
+            binding.vTop.setVisibility(View.VISIBLE);
+        } else if (TextUtils.equals("根部", bean.segment)) {
+            binding.tvBottom.setText("H: " + average0);
+            binding.tvBottom.setVisibility(View.VISIBLE);
+            binding.vBottom.setVisibility(View.VISIBLE);
+        } else {
+            averageMap.put(bean.segment, bean);
+        }
+    }
+
+    private void setTextView(TextView textView, RebarBean bean) {
+        textView.setText(bean.thickness1 + "\n" + bean.thickness);
+    }
+
+    //---------------------上传--------------------------
+    private void queryExportData() {
+        progressiveDialog.setTvContent("数据处理中...").show();
+        executorService.submit(() -> {
+            //执行耗时操作
+            doInBackgroundQueryExportData();
+            //更新UI
+            uiHandler.postDelayed(this::onPostExecuteQueryExportData, 500);
+        });
+    }
+
+    private void doInBackgroundQueryExportData() {
+        exportZoneList.clear();
+        exportPathList.clear();
+        //查询数据库ZoneBean数据
+        for (Long aLong : treatZoneIdSet) {
+            exportZoneList.add(GreenDaoHelper.getDaoSession().getZoneBeanDao().queryBuilder().where(ZoneBeanDao.Properties.Id.eq(aLong)).unique());
+        }
+    }
+
+    private void onPostExecuteQueryExportData() {
+        if (exportZoneList.isEmpty()) {
+            progressiveDialog.dismiss();
+            StyleAlertDialog styleAlertDialog = new StyleAlertDialog(this, "blue");
+            styleAlertDialog.setContent("暂无可上传数据").setOKButton("确定", v -> {
+                styleAlertDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }).show();
+            return;
+        }
+        exportCount = exportZoneList.size();
+        treatExportData();
+    }
+
+    private void treatExportData() {
+        int count = exportZoneList.size();
+        if (count > 0) {
+            int rate = (int) StringUtils.getRounding((exportCount - count) * 100.0 / exportCount, 0);
+            progressiveDialog.setTvContent("上传中..." + rate + "%").show();
+            exportData(exportZoneList.get(exportZoneList.size() - 1));
+        } else {
+            progressiveDialog.setTvContent("上传中...100%").show();
+            new Handler().postDelayed(() -> progressiveDialog.dismiss(), 1000);
+            StringBuilder sbd = new StringBuilder("上传结果：\n");
+            for (String s : exportPathList) {
+                sbd.append(s).append("\n");
+            }
+            StyleAlertDialog1 styleAlertDialog = new StyleAlertDialog1(this);
+            styleAlertDialog.setContent(sbd.toString()).setOKButton("确定", v -> {
+                styleAlertDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }).show();
+        }
+    }
+
+    private void exportData(ZoneBean zoneBean) {
+        if (zoneBean != null) {
+            if (TextUtils.isEmpty(zoneBean.entrustId) || TextUtils.isEmpty(zoneBean.entrustCode)) {
+                exportPathList.add(zoneBean.poleNo + ": 未绑定委托单号，无法上传");
+                onPostExecuteTakePicture();
+            } else {
+                refreshDataView(zoneBean);
+                uiHandler.postDelayed(() -> requestUploadGtjData(zoneBean), 100);
+            }
+        } else {
+            exportPathList.add("数据不完整，无法上传");
+        }
+    }
+
+    private void requestUploadGtjData(ZoneBean zoneBean) {
+        Bitmap bitmap = BitmapUtils.scrollViewScreenShot(binding.scrollView);
+
+        Map<String, Object> hashMap = new HashMap<>();
+        hashMap.put("SN", SPUtils.getInstance().getString("bluetooth-name"));
+        hashMap.put("project_name", zoneBean.entrustCode + "_" + zoneBean.projectName);
+        hashMap.put("pole_number", zoneBean.poleNo);
+        hashMap.put("pole_type", StaticConstant.configPoleTypeList.get(zoneBean.poleType));
+        hashMap.put("pole_standard", StaticConstant.poleStandardList.get(zoneBean.poleStandard));
+        hashMap.put("pole_length", zoneBean.poleHeight);
+        hashMap.put("pole_bottom_diameter", zoneBean.poleBottomDiameter);
+        hashMap.put("pole_top_diameter", zoneBean.poleTopDiameter);
+        hashMap.put("main_rebar_diameter", zoneBean.rebarDiameter);
+        hashMap.put("hooping_diameter", zoneBean.hoopingDiameter);
+        hashMap.put("start_time", zoneBean.startTime);
+
+        ArrayList<HashMap<String, Object>> poleDataList = getHashMaps(zoneBean);
+        hashMap.put("pole_data", poleDataList);
+
+        String img = BitmapUtils.Bitmap2Base64(bitmap, 100);
+        hashMap.put("imageFile", img);
+
+        String postJson = new Gson().toJson(hashMap);
+        Log.e("网络请求", postJson);
+
+        RetrofitPresenter.requestUpload(postJson, new RetrofitPresenterResultListener<>() {
+            @Override
+            public void onSuccess(MessageResult<?> result) {
+                exportPathList.add(zoneBean.poleNo + ": 上传成功");
+                zoneBean.isUpload = true;
+                GreenDaoHelper.getDaoSession().getZoneBeanDao().insertOrReplace(zoneBean);
+                onPostExecuteTakePicture();
+            }
+
+            @Override
+            public void onError(String error) {
+                exportPathList.add(zoneBean.poleNo + ": 上传失败，" + error);
+                onPostExecuteTakePicture();
+            }
+        });
+    }
+
+    @NonNull
+    private static ArrayList<HashMap<String, Object>> getHashMaps(ZoneBean zoneBean) {
+        ArrayList<HashMap<String, Object>> poleDataList = new ArrayList<>();
+        for (RebarPageBean rebarPageBean : zoneBean.rebarPageList) {
+            HashMap<String, Object> poleItem = new HashMap<>();
+            poleItem.put("pole_point", rebarPageBean.segment);
+            poleItem.put("average_thickness0", rebarPageBean.averageThickness1);
+            poleItem.put("average_thickness1", rebarPageBean.averageThickness);
+            ArrayList<HashMap<String, Double>> pointData = new ArrayList<>();
+            for (RebarBean rebarBean : rebarPageBean.beanList) {
+                HashMap<String, Double> rebarBeanMap = new HashMap<>();
+                rebarBeanMap.put("thickness0", rebarBean.thickness1);
+                rebarBeanMap.put("thickness1", rebarBean.thickness);
+                pointData.add(rebarBeanMap);
+            }
+            poleItem.put("point_data", pointData);
+            poleDataList.add(poleItem);
+        }
+        return poleDataList;
+    }
+
+    private void onPostExecuteTakePicture() {
+        exportZoneList.remove(exportZoneList.size() - 1);
+        treatExportData();
+    }
+}

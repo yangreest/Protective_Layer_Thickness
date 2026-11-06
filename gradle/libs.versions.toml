@@ -1,0 +1,57 @@
+[versions]
+appcompatVersion = "1.7.0"
+roomCommon = "2.6.1"
+constraintlayoutVersion = "2.2.1"
+junit = "4.13.2"
+runnerVersion = "1.5.2"
+espressoCoreVersion = "3.5.1"
+junitVersion = "1.2.1"
+
+utilcodexVersion = "1.31.1"
+loggerVersion = "2.2.0"
+recyclerView = "1.3.2"
+recyclerViewAdapter = "2.9.44"
+okhttpVersion = "3.14.9"
+okhttpLogInterceptor = "3.8.1"
+retrofitVersion = "2.9.0"
+retrofitCnnverterGson = "2.9.0"
+retrofitConverterScalars = "2.5.0"
+pickerViewVersion = "4.1.6"
+multidexVersion = "1.0.3"
+eventbus = "3.3.1"
+objectBoxVersion = "4.2.0"
+pictureSelector = "v2.5.9"
+glideVersion = "4.16.0"
+commonMath3 = "3.6.1"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "runnerVersion" }
+androidx-test-espressocore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCoreVersion" }
+androidx-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+
+utilcodex = { group = "com.blankj", name = "utilcodex", version.ref = "utilcodexVersion" }
+logger = { group = "com.orhanobut", name = "logger", version.ref = "loggerVersion" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+recyclerview-adapter = { group = "com.github.CymChad", name = "BaseRecyclerViewAdapterHelper", version.ref = "recyclerViewAdapter" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
+okhttp-log-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogInterceptor" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitCnnverterGson" }
+retrofit-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofitConverterScalars" }
+pickerview = { group = "com.contrarywind", name = "Android-PickerView", version.ref = "pickerViewVersion" }
+multidex = { group = "com.android.support", name = "multidex", version.ref = "multidexVersion" }
+eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
+objectbox = { group = "io.objectbox", name = "objectbox-android", version.ref = "objectBoxVersion" }
+objectbox-objectbrowser = { group = "io.objectbox", name = "objectbox-android-objectbrowser", version.ref = "objectBoxVersion" }
+pictureselector = { group = "com.github.LuckSiege.PictureSelector", name = "picture_library", version.ref = "pictureSelector" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
+common-math3 = { group = "org.apache.commons", name = "commons-math3", version.ref = "commonMath3" }
+
+
+[plugins]
+

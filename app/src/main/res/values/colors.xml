@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorFFF">#FFFFFF</color>
+    <color name="color000">#000000</color>
+    <color name="color333">#333333</color>
+    <color name="color666">#666666</color>
+    <color name="color999">#999999</color>
+    <color name="colorCCC">#CCCCCC</color>
+    <color name="colorDDD">#DDDDDD</color>
+    <color name="colorEEE">#EEEEEE</color>
+    <color name="color006F5F">#006F5F</color>     <!-- 006F5F   009FA8 -->
+    <color name="color80006F5F">#80006F5F</color>
+    <color name="color00D441">#00D441</color>
+    <color name="color_F1F1F1">#F1F1F1</color>
+    <color name="color_60D7FB">#60D7FB</color>
+    <color name="color_4B83F7">#4B83F7</color>
+    <color name="colorFF9600">#FF9600</color>
+    <color name="colorFFB610">#FFB610</color>
+    <color name="colorFF3B30">#FF3B30</color>
+    <color name="color_101B36">#161B36</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorBlue">#009FA8</color>
+    <color name="colorD8D8D8">#D8D8D8</color>
+    <color name="color2D2D2D">#2D2D2D</color>
+    <color name="color8E8E8E">#8E8E8E</color>
+    <color name="color5B5B5B">#5B5B5B</color>
+    <color name="colorF2F8F8">#F2F8F8</color>
+</resources>

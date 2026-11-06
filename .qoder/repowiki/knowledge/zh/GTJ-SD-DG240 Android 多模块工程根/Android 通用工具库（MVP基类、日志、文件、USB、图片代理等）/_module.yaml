@@ -1,0 +1,9 @@
+schema_version: 1
+module_path: utillibrary
+title: Android 通用工具库（MVP基类、日志、文件、USB、图片代理等）
+scope:
+    - utillibrary/
+source_files: []
+depends_on: []
+related_to:
+    - path: app

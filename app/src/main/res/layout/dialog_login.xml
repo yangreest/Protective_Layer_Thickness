@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="300dip"
+        android:layout_height="175dip"
+        android:background="@drawable/bg_fillet">
+
+        <TextView
+            android:id="@+id/tv_01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dip"
+            android:gravity="center"
+            android:text="密码登录"
+            android:textColor="@color/color000"
+            android:textSize="18dip" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="165dip"
+            android:layout_height="40dip"
+            android:layout_below="@+id/tv_01"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorEEE"
+            android:hint="请输入密码"
+
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color000"
+            android:textCursorDrawable="@null"
+            android:textSize="16dip" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/layout_bottom"
+            android:background="#BABABA" />
+
+        <LinearLayout
+            android:id="@+id/layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_dialog_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_dialog_left_selector"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="取消"
+                android:textColor="@drawable/btn_dialog_text_selector"
+                android:textSize="16dip" />
+
+            <TextView
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#BABABA" />
+
+            <Button
+                android:id="@+id/btn_dialog_right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_dialog_right_selector"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="确定"
+                android:textColor="@drawable/btn_dialog_text_selector"
+                android:textSize="16dip" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

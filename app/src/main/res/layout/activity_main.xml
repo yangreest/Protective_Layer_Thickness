@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFFF">
+
+    <com.example.gtj_sd_dg240.view.NavigationBar
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color006F5F" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/navigationBar"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/color006F5F"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_testing"
+            android:layout_width="167.14dp"
+            android:layout_height="130dp"
+            android:background="@drawable/btn_testing_selector" />
+
+        <ImageView
+            android:id="@+id/iv_testing1"
+            android:layout_width="167.14dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="80dp"
+            android:background="@mipmap/icon_testing"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_data"
+            android:layout_width="167.14dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/btn_data_selector" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="167.14dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/btn_setting_selector" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_testing"
+            android:layout_width="167.14dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="单点检测"
+            android:textColor="@color/color006F5F"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_testing1"
+            android:layout_width="167.14dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:gravity="center"
+            android:text="整圈检测"
+            android:textColor="@color/color006F5F"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_data"
+            android:layout_width="167.14dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:gravity="center"
+            android:text="数据管理"
+            android:textColor="@color/color006F5F"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="167.14dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:gravity="center"
+            android:text="系统设置"
+            android:textColor="@color/color006F5F"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/color000"
+        android:textSize="20dp"
+        android:visibility="gone" />
+</RelativeLayout>

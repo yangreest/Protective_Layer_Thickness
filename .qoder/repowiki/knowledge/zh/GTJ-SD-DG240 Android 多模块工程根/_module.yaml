@@ -1,0 +1,14 @@
+schema_version: 1
+module_path: ""
+title: GTJ-SD-DG240 Android 多模块工程根
+scope:
+    - build.gradle
+    - settings.gradle
+    - gradle.properties
+    - .gitignore
+    - android.keystore.txt
+    - android.keystore
+    - gradlew
+source_files: []
+depends_on: []
+related_to: []

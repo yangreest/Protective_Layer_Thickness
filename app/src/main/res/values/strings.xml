@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">混凝土电杆钢筋保护层智能检测系统</string>
+    <!--    <string name="app_name">GTJ-D800</string>-->
+    <string name="app_name_zh">混凝土电杆保护层检测仪</string>
+</resources>
